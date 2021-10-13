@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sock Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+    <link rel="icon" href="/sockgame/sockgameimages/favicon-sock-lg.png" >
+    <style>
+        /***Global Styles ***/
+        * {
+            max-width: 1000px;
+            font-family: 'Ubuntu Condensed', sans-serif; 
+        }
+
+        body {
+            background-image: url('/sockgame/sockgameimages/sock-bg-final-final.png');
+            background-repeat: no-repeat;
+        }
+
+        div {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+
+        /* makes socks display randomly */
+        img {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        img:hover {
+            border:white; 
+            cursor: pointer;
+        }
+
+        /*title and page data*/
+        .title {
+            display: block;
+            position: absolute;
+            margin-right: 0em;
+            margin-top: 0.25em;
+            margin-bottom: 0em;
+            margin-left: 0.65em;
+            font-size: 75px;
+            color: lightblue; 
+            font-weight: 600;
+            text-shadow:  2px 2px 5px black;
+        }
+
+        .instructions {
+            display: block;
+            position: absolute;
+            margin-top: 15em;
+            margin-left: 8em;
+            font-size: 18px;
+            color: whitesmoke;
+            text-shadow:  2px 2px 5px black;
+        }
+
+        .instructions-one {
+            display: block;
+            position: absolute;
+            margin-top: 16.5em;
+            margin-left: .5em;
+            font-size: 18px;
+            color: whitesmoke;
+            text-shadow:  2px 2px 5px black;
+        }
+
+        .instructions-two {
+            display: block;
+            position: absolute;
+            margin-top: 18em;
+            margin-left: 1.6em;
+            font-size: 18px;
+            color:whitesmoke;
+            text-shadow:  3px 3px 7px black;
+        }
+
+        #copyright {
+            position: absolute;
+            margin-top: 80px;
+            margin-left: 340px;
+            font-size: 14px;
+            max-width: 50px;
+            max-height: 50px;
+        }
+
+        #credited-works {
+            position: absolute;
+            margin-top: 880px;
+            margin-left: 720px;
+            font-size: 14px;
+            max-width: 500px;
+            max-height: 50px;
+            text-align: center;
+        }
+
+        /*game container and sections*/
+        #gameContainer {
+            margin-top: 200px;
+            margin-left: 450px;
+        }
+
+        #rightSide {
+            left: 500px;   
+        }
+
+        #leftSide {
+            background:#cc5dff;
+            border: 6px solid purple;
+            border-radius: 4%;
+        }
+
+        /*buttons*/
+        #startButton {
+            position: absolute;
+            padding: 5px;
+            margin-top: 175px;
+            margin-left: 75px;
+            width: 250px;
+            height: 75px;
+            font-size: 42px;
+            font-weight: bold;
+            text-shadow: 3px 3px 7px black;
+            box-shadow: 7px 7px 0px purple;
+            border: dotted;
+            border-width: 4px;
+            border-color: rgba(255, 38, 0, 0.788);
+            border-radius: 5px;
+            color: white;
+            background: salmon;
+            cursor: pointer;
+        }
+
+        #startButton:hover {
+            color: white;
+            border-color: white;
+            background: lightgreen;
+            transform: scale(0.99);
+            box-shadow: 4px 4px 0px purple;
+            cursor: pointer;
+        }
+
+
+        #restart {
+            position: absolute;
+            padding: 5px;
+            margin-top: 520px;
+            margin-left: 495px;
+            width: 50%;
+            height: 100px;
+            font-size: 42px;
+            font-weight: bold;
+            text-shadow: 3px 3px 7px black;
+            box-shadow: 7px 7px 0px purple;
+            border: dotted;
+            border-width: 4px;
+            border-color: rgba(255, 38, 0, 0.788);
+            border-radius: 5px;
+            color: white;
+            background: salmon;
+            cursor: pointer;
+        }
+
+        #restart:hover {
+            color: white;
+            border-color: white;
+            background: lightgreen;
+            transform: scale(0.99);
+            box-shadow: 4px 4px 0px purple;
+            cursor: pointer;
+        }
+
+        /*holds restart button upon gameover*/
+        #socks-trashed {
+            position: absolute;
+            margin-top: 200px;
+            margin-left: 450.5px;
+            background: white;
+            height: 474px;
+            padding: 15px;
+            width: 972px;
+            border-radius: 5%;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 3px 3px 7px black;
+            border: dotted;
+            border-width: 4px;
+            border-color: rgba(255, 38, 0, 0.788);
+            color: white;
+            background: rgba(161, 79, 70, 0.863);
+            text-align: center;
+        }
+
+        /*score keeper*/
+        #trash-score {
+            position: absolute;
+            background: lightgreen;
+            margin-top: 415px;
+            margin-left: 230px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 42px;
+            color: rgb(15, 75, 15);
+            font-weight: bold;
+            text-shadow: 3px 3px 3px green;
+        }
+
+        /*Four layers of covers upon hitting start button*/
+        #cover-start {
+            position: absolute;
+            margin-top: 200px;
+            margin-left: 446px;
+            background: white;
+            height: 474px;
+            padding: 15px;
+            width: 976px;
+            border-radius: 5%;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 3px 3px 7px black;
+            border: dotted;
+            border-width: 4px;
+            border-color: rgba(255, 38, 0, 0.788);
+            color: white;
+            background: purple;
+            /*background: rgba(161, 79, 70, 0.863);*/
+            text-align: center;
+            opacity: 1;
+            transition: opacity cubic-bezier(1,.01,.61,.7) 2.4s;
+        }
+
+        #left-spin {
+            position: absolute;
+            border-radius: 50%;
+            margin-left: 525px;
+            margin-top: 265px;
+            width: 355px;
+            animation-name: spin;
+            animation-duration: 5000ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear; 
+            opacity: 1;
+            transition: opacity cubic-bezier(1,.01,.61,.7) 2.4s;
+        }
+
+        @keyframes spin {
+            from {
+                transform:rotate(0deg);
+            }
+            to {
+                transform:rotate(360deg);
+            }
+        }
+
+        #right-spin {
+            position: absolute;
+            border-radius: 50%;
+            margin-left: 1030px;
+            margin-top: 275px;
+            width: 340px;
+            animation-name: spin;
+            animation-duration: 5000ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear; 
+            opacity: 1;
+            transition: opacity cubic-bezier(1,.01,.79,.95) 2.4s;
+        }
+
+        @keyframes spin {
+            from {
+                transform:rotate(0deg);
+            }
+            to {
+                transform:rotate(360deg);
+            }
+        }
+
+        #washing-machines {
+            position: absolute;
+            margin-top: 180px;
+            margin-left: 436px;
+            height: 512px;
+            padding: 15px;
+            width: 1000px;
+            font-size: 30px;
+            opacity: 1;
+            transition: opacity cubic-bezier(1,.01,.61,.7) 2.4s;
+        }
+
+    </style>
+</head>
+
+<body onload="generateSocks()">
+    <h1 class="title" alt="title">Sock Game</h1>
+    <span class="instructions" alt="instructions">It's laundry day!</span>
+    <span class="instructions-one" alt="instructions">In each load of laundry, one of your socks is missing its pair.</span>
+    <span class="instructions-two" alt="instructions">Click on the extra one on the left to throw it in the trash.</span>
+    <button id="startButton" type="button" alt="start button">start</button>
+    <div id="gameContainer" alt="game container">
+        <div id="leftSide" alt="left side of game"></div>   
+        <div id="rightSide" alt="right side of game"></div>
+    </div>
+    <audio id="start-sound-sock-game" src="/sockgame/sockgamemp3s/start-sound-sock-game.mp3"></audio>
+    <audio id="whoosh-sock" src="/sockgame/sockgamemp3s/whoosh-sock.mp3"></audio>
+    <audio id="gameover-sound" src="/sockgame/sockgamemp3s/gameover-sound.mp3"></audio>
+    <h1 id="trash-score">0</h1>
+    <div id="copyright" alt="copyright">
+        <p>&copy; 2021</p>
+    </div> 
+    <a href="/index.html"></a>
+    <div id="credited-works" alt="credited works">Images sourced and edited from <a href="https://unsplash.com/photos/SB_IsNeqM58" target="_blank">Unsplash.com</a> and <a href="https://www.canva.com/" target="_blank">Canva.com</a>. Sound from <a href="https://www.zapsplat.com/" target="_blank">Zapsplat.com</a>.</div>
+
+    <script>
+    //global variables
+        let numberOfSocks = 5;  
+        let trashScore = 0;
+        const theLeftSide = document.querySelector('#leftSide'); 
+        const theRightSide = document.querySelector('#rightSide'); 
+        const sockArray = ['gray-sock.png', 'green-sock.png', 'pink-sock.png', 'blue-sock.png', 'orange-sock.png']; 
+        const startButton = document.getElementById('startButton');
+    //global audio   
+        const startSound = document.querySelector('#start-sound-sock-game');
+        const whooshSockSound = document.querySelector('#whoosh-sock');
+        const gameoverSound = document.querySelector('#gameover-sound');
+        
+    //start cover
+        startButton.addEventListener('click', fadeIn);
+        const coverStart = document.createElement('div'); 
+        coverStart.setAttribute('id','cover-start');
+        document.body.appendChild(coverStart);
+        
+        function removeCover () {
+            document.body.removeChild(coverStart);
+        }
+
+        startButton.addEventListener('click', ()=> {
+            setTimeout(fadeIn, 3000);
+            document.querySelector('#cover-start').style.opacity = "0";
+            setTimeout(removeCover, 3000);
+        });
+
+        function fadeIn () {
+        document.querySelector('#cover-start').style.opacity = "0";
+        
+        }
+    
+    //leftSpin
+        const leftSpin = document.createElement('img');
+        leftSpin.src = '/sockgame/sockgameimages/leftSpin.png';
+        leftSpin.setAttribute('id', 'left-spin');
+        document.body.appendChild(leftSpin);
+
+        function removeLeftSpin () {
+            document.body.removeChild(leftSpin);
+        }
+
+        startButton.addEventListener('click', ()=> {
+            setTimeout(fadeLeftSpin, 3000);
+            document.querySelector('#left-spin').style.opacity = "0";
+            setTimeout(removeLeftSpin, 3000);
+        });
+      
+        function fadeLeftSpin () {
+        document.querySelector('#left-spin').style.opacity = "0";
+           
+        }
+
+    //rightSpin
+        const rightSpin = document.createElement('img');
+        rightSpin.src = '/sockgame/sockgameimages/rightSpin.png';
+        rightSpin.setAttribute('id', 'right-spin');
+        document.body.appendChild(rightSpin);
+
+        function removeRightSpin () {
+            document.body.removeChild(rightSpin);
+        }
+
+        startButton.addEventListener('click', ()=> {
+            setTimeout(fadeRightSpin, 3000);
+            document.querySelector('#right-spin').style.opacity = "0";
+            setTimeout(removeRightSpin, 3000);
+        });
+      
+        function fadeRightSpin () {
+        document.querySelector('#right-spin').style.opacity = "0";
+           
+        }
+
+
+    //washing machines
+        const washingMachines = document.createElement('img');
+        washingMachines.src = '/sockgame/sockgameimages/washingMachines.png';
+        washingMachines.setAttribute('id', 'washing-machines');
+        document.body.appendChild(washingMachines);
+
+        function removeWashingMachines () {
+            document.body.removeChild(washingMachines);
+        }
+
+        startButton.addEventListener('click', ()=> {
+            setTimeout(fadeInWashingMachines, 3000);
+            document.querySelector('#washing-machines').style.opacity = "0";
+            setTimeout(removeWashingMachines, 3000);
+        });
+      
+        function fadeInWashingMachines () {
+            document.querySelector('#washing-machines').style.opacity = "0";
+        }
+    
+    
+    //audio
+        startButton.addEventListener('click', ()=> {
+                startSound.play();
+                startButton.disabled = 'true';
+                startButton.hidden = 'true';
+            });
+
+        document.querySelector('#gameContainer').addEventListener('click', ()=> {
+            gameoverSound.play();
+        });
+     
+        
+    //main game 
+        function generateSocks () {
+            for (let i = 0; i < numberOfSocks; i++) { 
+                let randomSock = Math.floor(Math.random() * sockArray.length); 
+                let sock = document.createElement('img');  
+                sock.src = '/sockgame/sockgameimages/Socks/'+ sockArray[randomSock]; 
+
+                let randomTop = Math.floor(Math.random() * 400) + 1; 
+                let randomLeft = Math.floor(Math.random() * 400) + 1; 
+     
+                sock.style.top = randomTop + 'px'; 
+                sock.style.left = randomLeft + 'px'; 
+                theLeftSide.appendChild(sock);   
+            }
+            
+        let leftSideImages = theLeftSide.cloneNode(true); 
+        leftSideImages.removeChild(leftSideImages.lastChild); 
+        theRightSide.appendChild(leftSideImages); 
+        theLeftSide.lastChild.addEventListener('click',nextLevel); 
+
+    //audio - inside main game
+        theLeftSide.lastChild.addEventListener('click', ()=> {
+            whooshSockSound.play();
+        });
+
+    //trash score - inside main game
+        theLeftSide.lastChild.onclick = updateTheTrash;
+
+        function updateTheTrash () {
+            document.querySelector('#trash-score').innerHTML = trashScore;
+        }
+        
+        document.querySelector('#gameContainer').addEventListener('click',gameOver); 
+        }
+
+    //next level 
+        function nextLevel() { 
+            event.stopPropagation();
+
+            while (theRightSide.firstChild) { 
+                theRightSide.removeChild(theRightSide.firstChild); 
+            }
+            while (theLeftSide.firstChild) { 
+                theLeftSide.removeChild(theLeftSide.firstChild);
+            }
+            trashScore += 1;
+            numberOfSocks += 5;  
+            generateSocks();
+        }
+
+    //game over
+         function gameOver() { 
+            event.stopPropagation();
+            document.querySelector('#gameContainer').removeEventListener('click',gameOver); 
+
+            //div that contains restart button
+            const socksTrashed = document.createElement('div'); 
+            socksTrashed.setAttribute('id','socks-trashed');
+            socksTrashed.setAttribute('class','end-form');
+        
+            let totalSocks = ((numberOfSocks / 5) -1);
+            let ignoreClick =  theLeftSide.lastChild.addEventListener('click',nextLevel); 
+
+            if (totalSocks == 1) {
+                socksTrashed.innerText = "\n\n You threw away " + totalSocks  + " sock! \n\n I hope you don't find the missing pair around your room somewhere later...";
+            }
+            else if (numberOfSocks > 1) {
+                socksTrashed.innerText = "\n\n\n\nYou threw away " + totalSocks + " socks!\n\n";
+            }
+      
+            document.body.appendChild(socksTrashed);
+           
+            //restart button
+            const restart = document.createElement('button'); 
+            restart.setAttribute('id','restart');
+            restart.setAttribute('class','end-form');
+            restart.innerText ="try to find more?"; 
+            document.body.appendChild(restart); 
+            
+            //reload page upon restart
+            restart.addEventListener('click',() => location.reload());       
+        }
+
+
+/*******THINGS I WANT TO ADD******/
+// Special message when the user does not get any socks. Because the value is globally at 5, it doesn't work in the if statement. Have more special messages for different levels that are sock puns or jokey statements, such as "Rock 'em Sock 'em" and "Wow, maybe you should have done all of your laundry before throwing some away. Some of these might have had matches from different loads...".
+
+// I'm a student! Feel free to send me suggestions or suggested code to update this game at jackie@jackalootravels.com 
+// This is a desktop game that started as a nucamp.co workshop 4 assignment in Web Fundamentals. 
+
+
+    </script>
+</body>
+</html>
+
